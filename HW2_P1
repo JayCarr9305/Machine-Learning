@@ -1,0 +1,94 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPnQdLFvECCBe6b3xQyOI1R",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/JayCarr9305/Machine-Learning/blob/main/HW2_P1\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4GBJB3DRjHMF",
+        "outputId": "96c2955e-eb66-4050-f864-4f798f6b8044"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "accuracy score : 0.95\n"
+          ]
+        }
+      ],
+      "source": [
+        "import numpy as np\n",
+        "from sklearn import datasets, svm\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.metrics import accuracy_score\n",
+        "\n",
+        "iris = datasets.load_iris()\n",
+        "\n",
+        "sepal_length = iris.data[:, 0]\n",
+        "sepal_width  = iris.data[:, 1]\n",
+        "petal_length = iris.data[:, 2]\n",
+        "petal_width  = iris.data[:, 3]\n",
+        "\n",
+        "# two new features from the original four\n",
+        "sepal_area = sepal_length * sepal_width\n",
+        "petal_area = petal_length * petal_width\n",
+        "\n",
+        "X = np.column_stack([sepal_area, petal_area])\n",
+        "y = iris.target\n",
+        "\n",
+        "X_train, X_test, y_train, y_test = train_test_split(\n",
+        "    X, y,\n",
+        "    test_size=0.40,\n",
+        "    train_size=0.60,\n",
+        "    random_state=123,\n",
+        "    shuffle=True,\n",
+        "    stratify=y)\n",
+        "\n",
+        "clf = svm.SVC()\n",
+        "clf.fit(X_train, y_train)\n",
+        "\n",
+        "preds = clf.predict(X_test)\n",
+        "acc = accuracy_score(y_test, preds)\n",
+        "print('accuracy score :', acc)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "67pw-G6Vli2V"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
